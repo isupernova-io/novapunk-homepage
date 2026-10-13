@@ -1,0 +1,80 @@
+/* 
+_general.css
+*/
+
+
+@layer base {
+    html {
+        @apply w-full scroll-smooth;
+    }
+
+    body {
+        @apply font-body bg-body-bg text-body-color md:text-[15px] leading-[1.3em] text-[15px] font-medium overflow-x-clip;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-heading leading-[1.1em] text-default-950 font-bold;
+    }
+
+    button:not(:disabled),
+    [role="button"]:not(:disabled) {
+        @apply cursor-pointer;
+    }
+
+    .decoration span::before,
+    .decoration span::after {
+        @apply border-current;
+    }
+
+    .container {
+        @apply border-x-2 border-default-100;
+    }
+}
+
+select,
+input,
+textarea {
+    @apply py-2.5 px-3 transition-all duration-200 placeholder:text-body-color focus:border-default-950 focus:ring-0 focus:outline-0;
+}
+
+
+/* Navbar Active Link */
+#navbar-menu a.active {
+    @apply text-primary;
+}
+
+.container {
+    @apply max-w-250 mx-auto;
+}
+
+.container-full {
+    @apply mx-auto max-w-full lg:px-12.5 md:px-7.5 px-4;
+}
+
+/* Modal Backdrop */
+.hs-overlay-backdrop {
+    @apply transition duration-300 fixed inset-0 !bg-default-900/20 backdrop-blur-xs;
+}
+
+
+/* Corner Decoration */
+.decoration {
+    @apply text-default-500 pointer-events-none absolute inset-0 z-10;
+}
+
+.decoration span {
+    @apply before:absolute after:absolute before:size-1.5 after:size-1.5;
+}
+
+.decoration-top {
+    @apply before:-top-0.5 before:-inset-s-0.5 before:border-t-2 before:border-s-2 after:-top-0.5 after:-inset-e-0.5 after:border-t-2 after:border-e-2;
+}
+
+.decoration-bottom {
+    @apply before:-bottom-0.5 before:-inset-s-0.5 before:border-b-2 before:border-s-2 after:-bottom-0.5 after:-inset-e-0.5 after:border-b-2 after:border-e-2;
+}

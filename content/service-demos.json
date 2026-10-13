@@ -1,0 +1,584 @@
+[
+  {
+    "slug": "custom-ai-agents",
+    "category": "01 / AI Agents",
+    "title": "Custom AI Agents",
+    "subtitle": "From customer signals to personalized action.",
+    "description": "NovaPunk builds AI agents around a defined business workflow: understanding customer signals, selecting the next action, generating relevant content, and connecting the result to operational systems. For marketing teams, this can bring audience targeting, product recommendations, personalized offers, delivery, and campaign visibility into one application.",
+    "deliverables": [
+      "Business requirements, campaign rules, and an end-to-end workflow design",
+      "Customer features, targeting models, and explainability views",
+      "Product and brand knowledge retrieval connected to content generation",
+      "Personalized offers and channel-specific content",
+      "Delivery integration, activity history, and campaign dashboards"
+    ],
+    "example": "Walsh Retail marketing automation",
+    "context": "Walsh Retail is a fictional retailer developed for an internal Mother's Day marketing automation project. The supplied report follows the complete engineering path from Cloud SQL and BigQuery through Random Forest customer selection, RAG-assisted offer generation, Looker Studio reporting, and an email demonstration using Gemini and SendGrid.",
+    "problem": "Sending the same message to every customer ignores purchase history and product preferences. The example connects those signals to audience selection, relevant offers, and personalized email content.",
+    "inputs": [
+      "200 synthetic customers and their purchase histories",
+      "Product catalog and category preferences",
+      "RFM features derived from transactions",
+      "500 synthetic brand reviews used for retrieval"
+    ],
+    "flow": [
+      {
+        "name": "Understand",
+        "detail": "Build customer features from transaction history."
+      },
+      {
+        "name": "Select",
+        "detail": "Rank customers and apply campaign rules."
+      },
+      {
+        "name": "Retrieve",
+        "detail": "Retrieve relevant product and brand context."
+      },
+      {
+        "name": "Generate",
+        "detail": "Create offers and personalized HTML emails."
+      },
+      {
+        "name": "Deliver & record",
+        "detail": "Connect delivery and record campaign activity."
+      }
+    ],
+    "preview": "marketing",
+    "metrics": [
+      {
+        "value": "200",
+        "label": "Synthetic customers"
+      },
+      {
+        "value": "30",
+        "label": "Target customers in the write-up"
+      },
+      {
+        "value": "30",
+        "label": "Personalized offers reported"
+      }
+    ],
+    "results": "The supplied report records 200 customers scored, 30 selected targets, and 30 personalized offers. It also includes a rendered generated email, a SendGrid HTTP 202 response, an inbox example, and delivery/content history tables. HTTP 202 confirms provider acceptance; the inbox screenshot is a separate delivery example. No measured uplift in conversion or revenue is reported.",
+    "limitations": [
+      "The customer and order histories are synthetic and Walsh Retail is fictional; the report also uses a public product catalog.",
+      "Model scores and synthetic demonstrations do not establish real campaign conversion or revenue uplift.",
+      "The generation and delivery demonstration runs in a notebook; full scheduling and Cloud Run Job execution are described as production integration work.",
+      "Real vendor knowledge, A/B testing, open/click analytics, approval policies, and model feedback remain implementation-specific work.",
+      "The website shows stored examples only and sends no campaign messages."
+    ],
+    "sources": [
+      {
+        "title": "Original project account on LinkedIn",
+        "url": "https://www.linkedin.com/pulse/your-portfolio-so-does-everyone-elses-sungwon-son-reh2e/"
+      },
+      {
+        "title": "Original Walsh Retail technical series",
+        "url": "https://isupernova.io/tech/"
+      }
+    ],
+    "related": "cloud-data-ai",
+    "sections": [
+      {
+        "title": "Turn a campaign brief into an operating workflow.",
+        "intro": "The service starts with a business objective and the rules that define a valid action. Data, prediction, generation, and delivery are designed together so the application produces a usable result.",
+        "cards": [
+          {
+            "title": "Customer understanding",
+            "body": "Connect purchase history, product categories, and customer attributes. Derive recency, frequency, monetary value, and other features that support a targeting decision."
+          },
+          {
+            "title": "Targeting you can inspect",
+            "body": "Build a model for the available data and evaluate it before use. In the Walsh example, a Random Forest ranks customers and feature importance helps inspect the signals behind the model."
+          },
+          {
+            "title": "Context-aware offers",
+            "body": "Combine customer preferences, catalog details, discount rules, and retrieved brand information. Generate an offer with relevant context rather than relying on a single generic campaign template."
+          },
+          {
+            "title": "Execution and visibility",
+            "body": "Connect generated content to an approved delivery channel and record the output. A dashboard shows selected audiences, recommendations, model scores, and campaign activity."
+          }
+        ]
+      },
+      {
+        "title": "A Mother's Day campaign, end to end.",
+        "intro": "The research example illustrates how the service components fit together. These steps describe the supplied project, rather than a promise of identical results for every business.",
+        "cards": [
+          {
+            "title": "1. Prepare the customer signals",
+            "body": "Dataform creates customer features from synthetic orders: recency, order frequency, total spend, average and maximum order value, category breadth, quantity, discount behavior, and favorite brand."
+          },
+          {
+            "title": "2. Select a relevant audience",
+            "body": "Vertex AI Colab Enterprise trains a Random Forest and scores 200 customers. The 30 highest-scoring customers are selected. The report defines Premium at 0.85 or above with a 20% discount, and Very High from 0.75 to below 0.85 with 15%."
+          },
+          {
+            "title": "3. Retrieve and generate",
+            "body": "A corpus of 500 synthetic brand reviews is embedded and indexed in Pinecone. LangChain retrieves relevant passages and combines them with the customer profile and product information for Gemini offer generation."
+          },
+          {
+            "title": "4. Present, deliver, and record",
+            "body": "Looker Studio connects to BigQuery for campaign overview and offer-detail views. Gemini creates a subject line and HTML email; the notebook demonstrates SendGrid submission. Separate email_log and email_content tables preserve status and generated content."
+          }
+        ]
+      },
+      {
+        "title": "One workflow, different customer touchpoints.",
+        "intro": "Email is the implemented demonstration. The report also identifies ways to reuse offer outputs in other channels; these extensions must be scoped and integrated separately.",
+        "cards": [
+          {
+            "title": "Email and campaign operations",
+            "body": "Personalized subject, greeting, product description, offer body, and call to action, supported by an operational view of the generated offers."
+          },
+          {
+            "title": "Additional channels",
+            "body": "SMS, outbound call scripts, direct mail, web promotions, and push notifications are possible extensions of the offer data. They are not presented here as completed integrations."
+          }
+        ]
+      }
+    ],
+    "figures": [
+      {
+        "src": "walsh-0.webp",
+        "alt": "Walsh Retail Mother's Day Looker Studio dashboard with customer counts, prediction score, order categories and offer distribution",
+        "caption": "Actual dashboard figure from the supplied Walsh Retail report, Figure 44. The data is synthetic; 0.986 is the average model score, not a measured conversion rate."
+      },
+      {
+        "src": "walsh-1.webp",
+        "alt": "Walsh Retail offer-detail dashboard showing customer IDs, favorite brands, generated offers, discounts and recommended products",
+        "caption": "Actual offer-detail view from the supplied report, Figure 45. This shows prototype output records rather than a live dashboard."
+      }
+    ],
+    "sourceNote": "Based on Walsh Retail Marketing Automation - Sungwon Son, April-May 2026, with attribution to the original series at isupernova.io.",
+    "systemOverview": {
+      "intro": "The agent connects four responsibilities: ingesting business data, preparing a reusable analytical view, selecting and generating the next action, and delivering outputs with operational visibility. The Walsh Retail example shows how these responsibilities map to GCP and the AI components.",
+      "layers": [
+        {
+          "title": "Business data and ingestion",
+          "body": "Customer profiles, orders, product/SKU records, and related entities form the operational source. Initial migration establishes Cloud SQL tables; Datastream captures subsequent database changes for the BigQuery replica.",
+          "tools": "Cloud SQL · Datastream CDC · BigQuery source replica"
+        },
+        {
+          "title": "Analytical features and knowledge",
+          "body": "Dataform joins the source records into customer features such as recency, frequency, spend, and preferences. A separate review corpus is embedded and indexed to supply contextual knowledge during generation.",
+          "tools": "Dataform · mart.customer_features · Embeddings · Pinecone"
+        },
+        {
+          "title": "Prediction and offer generation",
+          "body": "A Random Forest scores customers and writes the selected targets. LangChain retrieves relevant knowledge, while Gemini combines that context with products, customer preferences, and segment-based discount rules to generate offers.",
+          "tools": "Vertex AI · mart.ml_prediction · LangChain RAG · Gemini · campaign.offer"
+        },
+        {
+          "title": "Delivery, reporting, and records",
+          "body": "Gemini turns an offer into a personalized subject and HTML email. SendGrid receives the message. Looker Studio exposes target and offer information; campaign tables preserve submission/delivery status and generated content.",
+          "tools": "Gemini · SendGrid · Looker Studio · email_log · email_content"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Capture operational changes",
+          "body": "Datastream reads the source binary log and propagates changes into BigQuery. This ingestion is continuous and distinct from the scheduled transformation run.",
+          "output": "An updated analytical replica of the operational source."
+        },
+        {
+          "title": "Compile and refresh customer features",
+          "body": "Cloud Scheduler triggers Cloud Workflows daily at 01:00 UTC. Workflows creates a Dataform compilation result and submits a workflow invocation for the SQLX transformations. The documented invocation return is not, by itself, verification that all downstream campaign stages completed.",
+          "output": "mart.customer_features and a traceable transformation invocation."
+        },
+        {
+          "title": "Score and select campaign targets",
+          "body": "The Vertex AI Colab workflow reads the prepared features, trains/evaluates a Random Forest, and scores the customer population. The example selects 30 targets from 200 customers and records scores, segments, model version, and batch information.",
+          "output": "mart.ml_prediction with the selected audience."
+        },
+        {
+          "title": "Retrieve knowledge and create an offer",
+          "body": "Customer preferences guide retrieval of relevant review passages from Pinecone through LangChain. Gemini receives the retrieved context, recommended product, and campaign rules, then produces an individualized offer.",
+          "output": "campaign.offer with product recommendation, discount, and generated text."
+        },
+        {
+          "title": "Generate the personalized email",
+          "body": "Join the stored offer to customer and product information. Gemini returns the subject and HTML body, including greeting, rewritten product description, offer text, and call to action.",
+          "output": "Channel-ready email content for each selected customer."
+        },
+        {
+          "title": "Submit and preserve the activity",
+          "body": "The notebook submits the generated message through SendGrid. HTTP 202 records provider acceptance; an inbox example separately demonstrates receipt. Status history and full generated content are stored in separate campaign tables.",
+          "output": "Submission/status records and archived email content."
+        },
+        {
+          "title": "Review the campaign",
+          "body": "Looker Studio reads the prediction and offer tables to show audience size, model scores, product/category distribution, and offer details. Open/click tracking, A/B testing, and feedback into retraining are identified as later integration work.",
+          "output": "Campaign visibility for the business team, with a defined path for future feedback."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "physics-world-models",
+    "category": "02 / Physics World Models",
+    "title": "Physics World Model Applications",
+    "subtitle": "Rehearse physical actions before executing them.",
+    "description": "NovaPunk builds simulation environments, outcome models, and planning tools for physical systems. When outcome labels are unavailable, a defined physical environment can generate training examples and provide a separate basis for evaluating a plan.",
+    "deliverables": [
+      "A simulation environment with explicit physical assumptions",
+      "Simulation-generated training and validation data",
+      "Outcome and state-transition models",
+      "A planning interface with evaluation results"
+    ],
+    "example": "AI Harvest Planner",
+    "context": "An internal research prototype for robotic apple harvesting. It combines a MuJoCo environment, learned outcome and transition models, and a planner. The supplied report documents simulation validation; it does not report an orchard field trial.",
+    "problem": "A harvest planner needs to decide which fruit to attempt, in what order, and with which gripper configuration while protecting the stem. Public detections provide geometry but do not label the outcome of a picking attempt.",
+    "inputs": [
+      "FRESH RGB-D detections: position, fruit dimensions, and stem direction",
+      "8,133 detections retained after filtering",
+      "MuJoCo scenes with force-limited grasping and bend/twist actions",
+      "Four gripper apertures evaluated from the same settled state"
+    ],
+    "flow": [
+      {
+        "name": "Reconstruct",
+        "detail": "Create a physical scene from fruit geometry."
+      },
+      {
+        "name": "Simulate",
+        "detail": "Try paired actions from the same initial state."
+      },
+      {
+        "name": "Learn",
+        "detail": "Fit outcome and neighbour-transition models."
+      },
+      {
+        "name": "Plan",
+        "detail": "Choose stations, sequence, and gripper settings."
+      },
+      {
+        "name": "Validate",
+        "detail": "Replay the selected plan in MuJoCo."
+      }
+    ],
+    "preview": "physics",
+    "figures": [
+      {
+        "src": "harvest-simulation.webp",
+        "alt": "Five MuJoCo frames showing approach, grasp, bend and twist, and stem-intact detachment",
+        "caption": "Recorded MuJoCo frame sequence from Physics World Models, Figure 6 (page 8). This is a simulation example, not footage from a physical robot."
+      }
+    ],
+    "metrics": [
+      {
+        "value": "31,960",
+        "label": "Simulation-generated pick labels"
+      },
+      {
+        "value": "94.07%",
+        "label": "Reported held-out fruit classification accuracy"
+      },
+      {
+        "value": "3,912",
+        "label": "Picks replayed for plan validation"
+      }
+    ],
+    "results": "The report documents separate checks of physical calculations, invariants, pipeline consistency, and plan replay. In the reported operating configuration, predicted success was 0.788 and realised simulation success was 0.730. That gap illustrates why classification accuracy alone is insufficient for evaluating a planner.",
+    "limitations": [
+      "No field trial or calibration against a particular orchard is reported.",
+      "Leaves and branches are excluded; canopy density includes assumptions.",
+      "Perception and robot motion control are outside the planning module's scope.",
+      "Block-level routing, shift scheduling, and hardware integration remain separate work.",
+      "The static page neither executes MuJoCo nor controls hardware."
+    ],
+    "sources": [
+      {
+        "title": "AI Harvest Planner source repository",
+        "url": "https://github.com/isupernova-io/aipick-harvest-planner"
+      }
+    ],
+    "sourceNote": "Figures and reported results are drawn from Physics World Models - Sungwon Son, September 2026.",
+    "related": "cloud-data-ai",
+    "sections": [
+      {
+        "title": "A model of the action and the world it changes.",
+        "intro": "The harvest example separates physical simulation, learned prediction, and planning. Removing one fruit can change the neighbours, so a sequence must account for state changes as well as individual pick outcomes.",
+        "cards": [
+          {
+            "title": "Physics-consistent environment",
+            "body": "MuJoCo scenes represent the fruit, segmented stalk, competing separation points, and a force-limited gripper. Approach, grasp, bend, twist, and release are simulated rather than assigned an outcome in advance."
+          },
+          {
+            "title": "Outcome and transition models",
+            "body": "The outcome model predicts six pick classes. A separate transition model estimates whether neighbouring fruit remain tilted after a pick; known gravity behavior resolves the unambiguous cases."
+          },
+          {
+            "title": "Sequence-aware planning",
+            "body": "The planner selects stations, picking order, and gripper configuration. Neighbour state updates help the plan account for a scene that changes after each action."
+          },
+          {
+            "title": "Independent simulation replay",
+            "body": "Selected actions are replayed in MuJoCo with the learned outcome model excluded from scoring. The report records 3,912 validation picks and shows both agreement and prediction errors."
+          }
+        ]
+      }
+    ],
+    "videos": [
+      {
+        "file": "pick_one_annotated.mp4",
+        "title": "Single-pick simulation",
+        "caption": "Annotated MuJoCo recording of one picking attempt. The physical action and resulting state illustrate the outcome-prediction problem described in the report."
+      },
+      {
+        "file": "pick_two_annotated.mp4",
+        "title": "Two-pick sequence",
+        "caption": "Annotated recording of successive picks. Watch how the remaining fruit and contact conditions change after the first action, motivating the neighbour-transition model."
+      },
+      {
+        "file": "dyn_compare_tree23_v3.mp4",
+        "title": "Neighbour dynamics - prediction vs simulation",
+        "caption": "Tree 23 comparison: the dynamics model predicts the remaining fruit state on the left; recorded MuJoCo replay appears on the right. The one-survivor case settles vertically, illustrating how known physical behavior and learned transitions are evaluated separately."
+      },
+      {
+        "file": "plan_tree23_gripper_v34.mp4",
+        "title": "Final simulation example - a complete harvest plan",
+        "caption": "Tree 23 harvest-plan visualization shows the simulated robot moving between planned stops and picking fruit in sequence with its gripper. The on-screen counters track stops, picks, and harvested fruit. This is a simulation visualization, not a field trial; the canopy shell and trunk are drawn for orientation and are not part of the physical model."
+      }
+    ]
+  },
+  {
+    "slug": "business-world-models",
+    "category": "03 / Business World Models",
+    "title": "Business World Models & Analytics",
+    "subtitle": "Understand disruption. Compare possible responses.",
+    "description": "NovaPunk combines exploratory data analysis, predictive modelling, and scenario simulation to study how demand and operations change. The service connects data preparation and interpretable findings to forecasts and decision-support applications.",
+    "deliverables": [
+      "Prepared datasets and reproducible analysis",
+      "EDA charts and driver analysis",
+      "Forecasts with documented evaluation",
+      "Scenario comparisons and decision-support interfaces"
+    ],
+    "example": "Retail, energy, and traffic research",
+    "context": "Three internal studies use public data to examine disruption in different domains. They share an observe, learn, and simulate approach, while the models and completion status differ by domain.",
+    "problem": "Historical dashboards describe what happened. Planning also needs estimates of what could happen under changing weather, demand, or operating conditions, together with a clear account of uncertainty and data limitations.",
+    "inputs": [
+      "Retail: M5 Walmart, Rossmann sales, and GDELT signals",
+      "Energy: PJM/EIA demand data and Grid2Op scenarios",
+      "Traffic: Metro I-94 hourly volume, calendar, and weather data",
+      "EDA, feature preparation, and time-based model evaluation"
+    ],
+    "flow": [
+      {
+        "name": "Observe",
+        "detail": "Collect operational history and external signals."
+      },
+      {
+        "name": "Explore",
+        "detail": "Identify patterns, missing data, and candidate drivers."
+      },
+      {
+        "name": "Forecast",
+        "detail": "Fit and evaluate models on held-out periods."
+      },
+      {
+        "name": "Simulate",
+        "detail": "Compare assumptions and possible future conditions."
+      },
+      {
+        "name": "Explain",
+        "detail": "Present forecasts and scenario-specific findings."
+      }
+    ],
+    "preview": "business",
+    "figures": [
+      {
+        "src": "retail-eda.webp",
+        "alt": "Retail sales charts comparing the US polar vortex and Germany Elbe flood with category changes",
+        "caption": "Retail EDA reproduced from Business World Models, Figure 1 (page 5). Sales patterns differ across the two historical disaster studies."
+      },
+      {
+        "src": "traffic-eda.webp",
+        "alt": "Hour by weekday traffic volume heatmap and feature correlation matrix",
+        "caption": "Traffic EDA reproduced from Business World Models, Figure 9 (page 22). The heatmap and correlation matrix describe historical patterns, not causal effects."
+      }
+    ],
+    "metrics": [
+      {
+        "value": "3",
+        "label": "Research domains"
+      },
+      {
+        "value": "24 hours",
+        "label": "Traffic forecasting horizon"
+      },
+      {
+        "value": "2018",
+        "label": "Reported traffic validation period"
+      }
+    ],
+    "results": "Retail combines TFT forecasting with Monte Carlo scenario studies. Energy evaluates a PPO policy within Grid2Op. Traffic combines a TFT forecast with Gemini-generated explanations. The supplied traffic report lists MAE 192 vehicles/hour and R² 0.977 on its validation data; these results are reported from the study and have not been rerun for this website.",
+    "limitations": [
+      "Historical studies do not establish performance on a new customer's data.",
+      "Forecasting and scenario associations do not automatically establish causal effects.",
+      "The traffic study covers one sensor and excludes incident data.",
+      "Cross-domain integration and feedback-driven retraining are described as future work in the supplied report.",
+      "This page presents existing charts; it does not query live data or recompute predictions."
+    ],
+    "sources": [
+      {
+        "title": "Original technical research collection",
+        "url": "https://isupernova.io/tech/"
+      }
+    ],
+    "sourceNote": "Figures and reported findings are drawn from Business World Models - Sungwon Son, Spring 2026.",
+    "related": "physics-world-models"
+  },
+  {
+    "slug": "cloud-data-ai",
+    "category": "04 / Cloud & Data Engineering",
+    "title": "Cloud Data Architecture & Engineering",
+    "subtitle": "Design the data foundation. Engineer the path to analytics and AI.",
+    "description": "NovaPunk designs and implements cloud data architectures that connect operational systems to analytics and AI applications. The service covers source-system analysis, relational and warehouse modelling, migration, change data capture, SQL transformations, workflow orchestration, and validation. GCP implementation can combine Cloud SQL, Datastream, BigQuery, Dataform, Cloud Workflows, and Cloud Scheduler.",
+    "deliverables": [
+      "Source-system assessment, architecture diagrams, and data-flow specifications",
+      "Operational ERDs, warehouse datasets, and migration mappings",
+      "CDC ingestion and analytics-ready transformation pipelines",
+      "Feature marts and downstream BI or AI interfaces",
+      "Workflow dependencies, service-account access design, and run verification",
+      "Synthetic test datasets and optional knowledge-ingestion/RAG pipelines"
+    ],
+    "example": "From operational retail data to an analytical feature mart",
+    "context": "The Walsh Retail architecture and pipeline documents illustrate this service using a small internal project. The initial architecture separates ingestion, storage/modelling, intelligence, and action. The subsequent pipeline account documents direct Cloud SQL-to-BigQuery CDC, Dataform transformations, and scheduled Cloud Workflows execution.",
+    "problem": "Operational databases are designed to support transactions, while analytics and AI need joined history, consistent definitions, and reusable features. The service creates a deliberate path between those environments instead of coupling every dashboard and model directly to production tables.",
+    "inputs": [
+      "Source-system entities, relationships, existing schema, and reporting requirements",
+      "Cloud SQL retail schema with customer, order, product, payment, address, and SKU data",
+      "Binlog changes and raw BigQuery replica data",
+      "Transformation definitions, freshness requirements, and workflow dependencies"
+    ],
+    "flow": [
+      {
+        "name": "Assess & model",
+        "detail": "Survey source data, select domains, define ERDs and mappings."
+      },
+      {
+        "name": "Migrate & capture",
+        "detail": "Load operational tables and capture changes with Datastream."
+      },
+      {
+        "name": "Transform",
+        "detail": "Compile SQLX and build analytical features in BigQuery."
+      },
+      {
+        "name": "Orchestrate",
+        "detail": "Coordinate execution with Workflows and Scheduler."
+      },
+      {
+        "name": "Verify & serve",
+        "detail": "Trace source changes through the mart and expose BI/AI interfaces."
+      }
+    ],
+    "preview": "cloud",
+    "figures": [
+      {
+        "src": "architecture-0.webp",
+        "alt": "Four-layer GCP reference architecture showing ingestion, storage and modelling, intelligence, and action",
+        "caption": "Original architecture diagram from Project Design & Architecture (page 18). It records the early design, including Cloud Composer and BigQuery Vector Search; later implementation uses Cloud Workflows and Pinecone."
+      },
+      {
+        "src": "pipeline-0.webp",
+        "alt": "Implemented data pipeline from Cloud SQL through Datastream and BigQuery to Dataform feature marts, Workflows and Scheduler",
+        "caption": "Implemented pipeline diagram from Data Pipeline: CDC, ETL & Orchestration, Figure 8.1. It is the later implementation view of the reference project."
+      }
+    ],
+    "metrics": [
+      {
+        "value": "8",
+        "label": "Operational tables in the reference project"
+      },
+      {
+        "value": "200",
+        "label": "Customer feature rows reported"
+      },
+      {
+        "value": "01:00 UTC",
+        "label": "Reference transformation schedule"
+      }
+    ],
+    "results": "The pipeline report documents operational migration, CDC backfill and change propagation, Dataform customer-feature generation, and scheduled workflow invocation. Its end-to-end UPDATE test traces a source change to a matching timestamp in the analytical join. These are reference-project observations, not a throughput or availability guarantee for a client workload.",
+    "limitations": [
+      "The retail system is a prototype with synthetic data and a limited demonstration scale.",
+      "RAG quality depends on corpus quality, retrieval relevance, and output evaluation.",
+      "Simulation-generated labels inherit the assumptions of the simulator.",
+      "Cloud access controls, monitoring, cost, and scale must be scoped for each implementation.",
+      "This page creates no GCP resources, invokes no model APIs, and sends no messages."
+    ],
+    "sources": [
+      {
+        "title": "Project Design & Architecture - original account",
+        "url": "https://isupernova.io/tech/part-1-building-a-practical-autonomous-ai-agent-on-gcp/"
+      },
+      {
+        "title": "Data Pipeline: CDC, ETL & Orchestration - original account",
+        "url": "https://isupernova.io/tech/part-2-building-a-practical-autonomous-ai-agent-on-gcp/"
+      }
+    ],
+    "related": "custom-ai-agents",
+    "sections": [
+      {
+        "title": "Architecture follows the workload.",
+        "intro": "The architecture work defines what belongs in the operational system, what belongs in the analytical environment, and how the two communicate.",
+        "cards": [
+          {
+            "title": "Data discovery and requirements",
+            "body": "Survey available sources, identify the data needed for the use case, and specify freshness, history, consumption patterns, and integration boundaries before selecting services."
+          },
+          {
+            "title": "Operational modelling and migration",
+            "body": "Design entity relationships and normalized tables for transactional workloads. The reference project separates customer, address, payment, order header/detail, product, and SKU domains and migrates a local MariaDB dataset into Cloud SQL."
+          },
+          {
+            "title": "Warehouse and mart design",
+            "body": "Separate source replicas from analytical tables. BigQuery datasets organize customer features, predictions, campaigns, vector-related assets, and pipeline logs around their intended consumers."
+          },
+          {
+            "title": "Access and deployment design",
+            "body": "Define service identities, data-location requirements, and service-to-service permissions alongside the architecture. The project encountered region and service-account invocation issues, which informed its implementation checks."
+          }
+        ]
+      },
+      {
+        "title": "Capture changes. Build reusable data products.",
+        "intro": "In the implemented pipeline, CDC ingestion is continuous while feature transformation is scheduled. Their freshness and execution semantics are described separately.",
+        "cards": [
+          {
+            "title": "CDC ingestion",
+            "body": "Datastream captures insert, update, and delete events from the MySQL binary log. Initial backfill and subsequent changes feed the BigQuery source replica. Freshness and source-log retention must be sized for the workload; zero latency is not assumed."
+          },
+          {
+            "title": "SQL transformations and feature marts",
+            "body": "Dataform SQLX defines transformation targets and dependencies. The retail example joins transaction and catalog data to build recency, frequency, spend, discount behavior, and category features in mart.customer_features."
+          },
+          {
+            "title": "Compile, execute, and schedule",
+            "body": "Cloud Workflows creates a Dataform compilation result, then invokes the compiled workflow. Cloud Scheduler triggers the reference job daily at 01:00 UTC. The supplied example returns an invocation identifier; completion checks and failure handling must be designed for the operating workflow."
+          },
+          {
+            "title": "Trace changes end to end",
+            "body": "The pipeline account verifies a source UPDATE in Cloud SQL, its CDC replica in BigQuery, the Dataform job, and the matching update timestamp in a mart join. Run identifiers, timestamps, record checks, and failure visibility are part of the service design."
+          }
+        ]
+      },
+      {
+        "title": "Extend the foundation when the application needs it.",
+        "intro": "Synthetic data and knowledge retrieval support the core architecture and engineering work. They are optional components selected for the application.",
+        "cards": [
+          {
+            "title": "Synthetic data for development",
+            "body": "Create representative test records to exercise relationships, transformations, and edge cases before connecting customer data. Simulation-generated labels, such as the separate MuJoCo harvest dataset, support physical modelling use cases."
+          },
+          {
+            "title": "Data for retrieval and generation",
+            "body": "Prepare a knowledge corpus, metadata, embedding/index ingestion, and retrieval interfaces for downstream applications. The later retail implementation uses Pinecone and LangChain; the early architecture diagram shows BigQuery Vector Search as the original design."
+          }
+        ]
+      }
+    ],
+    "sourceNote": "Based primarily on the supplied Project Design & Architecture and Data Pipeline documents by Sungwon Son. Later AI/RAG and BI accounts provide downstream application context."
+  }
+]
