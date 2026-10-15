@@ -49,6 +49,8 @@ jobs:
           project_id: ${{ vars.FIREBASE_PROJECT_ID }}
           workload_identity_provider: projects/1078070273018/locations/global/workloadIdentityPools/github-homepage/providers/github-actions
           service_account: github-novapunk-homepage@novapunk-homepage.iam.gserviceaccount.com
+          # Verify token exchange here so IAM/API errors are visible before deployment.
+          token_format: access_token
       - name: Deploy Firebase Hosting
         env:
           FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }}
