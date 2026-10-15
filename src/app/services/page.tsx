@@ -5,8 +5,8 @@ import ServiceOverview from "@/components/ServiceOverview";
 export const metadata: Metadata = { title: "Services" };
 export default function Services() {
   return <>
-    <PageIntro eyebrow="Services" title="Custom AI engineering for practical problems.">
-      <p>From a focused proof of concept to workflow integration, NovaPunk scopes each engagement around your data, constraints, and intended outcomes.</p>
+    <PageIntro eyebrow="Services" title="Custom AI and web development for your business.">
+      <p>From AI workflows and data systems to custom websites, NovaPunk scopes each engagement around your requirements, constraints, and intended outcomes.</p>
     </PageIntro>
     <ServiceOverview />
     <div className="lg:px-7.5 md:px-5 px-4"><div className="container p-6 md:p-10 pb-16">

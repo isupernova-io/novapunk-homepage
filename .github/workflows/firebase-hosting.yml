@@ -29,14 +29,27 @@ jobs:
     needs: build
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.FIREBASE_DEPLOY_ENABLED == 'true' && vars.FIREBASE_PROJECT_ID != ''
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
           name: hosting-output
           path: out
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - uses: actions/setup-node@v4
         with:
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          projectId: ${{ vars.FIREBASE_PROJECT_ID }}
-          channelId: live
+          node-version: '22'
+      - name: Install Firebase CLI
+        run: npm install --global firebase-tools@15.33.0
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v3
+        with:
+          project_id: ${{ vars.FIREBASE_PROJECT_ID }}
+          workload_identity_provider: projects/1078070273018/locations/global/workloadIdentityPools/github-homepage/providers/github-actions
+          service_account: github-novapunk-homepage@novapunk-homepage.iam.gserviceaccount.com
+      - name: Deploy Firebase Hosting
+        env:
+          FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }}
+        run: firebase deploy --only hosting --project "$FIREBASE_PROJECT_ID" --non-interactive

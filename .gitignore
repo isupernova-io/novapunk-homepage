@@ -29,6 +29,7 @@
 .firebase/
 *service-account*.json
 *serviceAccount*.json
+gha-creds-*.json
 
 # debug
 npm-debug.log*

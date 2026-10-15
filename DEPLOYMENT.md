@@ -39,11 +39,26 @@ release branch. Pull requests run the build; pushes to `main` also deploy when e
 Configure these repository settings after Firebase Hosting is initialized:
 
 - Variable `FIREBASE_PROJECT_ID`: the actual project ID.
-- Secret `FIREBASE_SERVICE_ACCOUNT`: the deployment service-account JSON; never commit it.
 - Variable `FIREBASE_DEPLOY_ENABLED`: `true` after the deployment identity and project are configured.
 
-The workflow uses Firebase's Hosting deploy action. Until enabled, it builds and
-uploads the static output as a GitHub Actions artifact without publishing.
+The workflow uses GitHub OIDC and Workload Identity Federation through a service
+account, then deploys with the Firebase CLI using Application Default Credentials.
+No service-account JSON key or `FIREBASE_SERVICE_ACCOUNT` secret is required.
+Until enabled, it builds and uploads the static output without publishing.
+
+Deployment identity configured in the workflow:
+
+- Provider: `projects/1078070273018/locations/global/workloadIdentityPools/github-homepage/providers/github-actions`
+- Service account: `github-novapunk-homepage@novapunk-homepage.iam.gserviceaccount.com`
+- Target project variable: `novapunk-homepage-a8912`
+
+The provider condition must restrict `assertion.repository` to
+`isupernova-io/novapunk-homepage` and `assertion.ref` to `refs/heads/main`.
+The repository principal needs Workload Identity User on the service account.
+The service account belongs to a different project from the Hosting target:
+grant it Firebase Hosting Admin and API Keys Viewer on `novapunk-homepage-a8912`.
+Creating the pool and identity binding does not itself grant those target roles.
+Cloud IAM bindings and the first successful deployment still need verification.
 
 Firebase/GCP resources, repository connection, credentials, and DNS are not created
 by these local configuration files. Add the custom domain after validating the
