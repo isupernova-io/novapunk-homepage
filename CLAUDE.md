@@ -93,3 +93,7 @@ site text and official documents are in English (official documents also get a K
 10. 2026-11-23 owner confirmed the test email arrived in the Zoho inbox: the full path (function -> Firestore -> Zoho
     SMTP) works. Next: commit and push, then one real request from https://novapunkai.com/contact/, then delete the test
     entries in Firestore `requests`.
+11. 2026-11-23 GitHub Actions run #6 (41de884) failed at `npm run build`: the site's tsconfig included `functions/**`,
+    whose packages exist only on this PC. Fix: tsconfig excludes `functions`, eslint ignores `functions/**`; a clean
+    clone with only the site packages builds (10 pages). `scripts/push.ps1` copied from the NovaNutri repo (checks for
+    uncommitted changes, never force pushes); it pushes the repository it sits in.
