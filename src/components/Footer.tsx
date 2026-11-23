@@ -16,7 +16,10 @@ const Footer = () => (
       </div>
       <div className="flex flex-wrap justify-between gap-3 border-t border-default-800 px-4 sm:px-5 lg:px-6.5 py-4 text-sm text-default-300">
         <p>© {new Date().getFullYear()} NovaPunk LLC</p>
-        <a href="mailto:sean@novapunkai.com" className="hover:text-white">sean@novapunkai.com</a>
+        <span className="flex gap-5">
+          <Link href="/privacy" className="hover:text-white">Privacy</Link>
+          <a href="mailto:sean@novapunkai.com" className="hover:text-white">sean@novapunkai.com</a>
+        </span>
       </div>
     </div>
   </footer>

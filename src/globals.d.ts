@@ -2,6 +2,8 @@ import { IStaticMethods } from 'preline/preline'
 
 declare global {
   interface Window {
+    gtag?: (...args: unknown[]) => void
+    dataLayer?: unknown[]
     HSStaticMethods: IStaticMethods
     HSOverlay?: {
       close: (selector: string) => void

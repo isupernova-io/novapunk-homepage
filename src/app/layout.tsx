@@ -8,6 +8,7 @@ import "swiper/css/navigation";
 import "swiper/css/effect-fade";
 import AppProvidersWrapper from "@/components/wrappers/AppProvidersWrapper";
 import { DEFAULT_PAGE_TITLE } from "@/config/constants";
+import Analytics from "@/components/Analytics";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -57,6 +58,7 @@ const RootLayout = ({
         <AppProvidersWrapper>
           {children}
         </AppProvidersWrapper>
+        <Analytics />
       </body>
     </html>
   );

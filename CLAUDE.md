@@ -45,3 +45,51 @@ site text and official documents are in English (official documents also get a K
    ("Retail marketing automation", /demos/custom-ai-agents.html) moved to the bottom of the Featured projects block as
    "More examples". To be updated later by the owner's plan. Rule in ServiceOverview: any service with featured projects
    behaves this way.
+4. 2026-11-23 owner pushed b614ff5; GitHub Actions run #5 built and deployed to Firebase Hosting (success; runs #3 and
+   #4 on 6e70426 had failed at the Firebase access check, so this was the first successful automated deploy seen here).
+   Live check: https://novapunkai.com/ shows Latest projects and the 720p video; /projects/novanutri/ and the video
+   files answer 206.
+5. 2026-11-23 Google Analytics (owner approved): the owner's existing account `isupernova` (also holds the blog
+   properties) already had a property `novapunk-homepage-a8912` (from the Firebase link) with no data stream. Created
+   the web stream "NovaPunk website" for https://novapunkai.com with enhanced measurement on: stream ID 16398439510,
+   measurement ID G-BZ9TFJCFBF (public, goes in the site code); GA shows the Google tag GTM-5SVW974Q for it. Not yet in
+   the site. Plan (owner): GA4 with Consent Mode and a privacy policy page; a project request form on Firebase Cloud
+   Functions and Firestore with email notice; a "How we work" offer page (benchmarks: RaftLabs, WorkWise, Ridgeway AI,
+   Parlance Labs, Yuke). Waiting for the owner's pricing decision (publish "starting at" prices or ask only a budget
+   range) and the Firebase plan (Blaze needed for Cloud Functions).
+6. 2026-11-23 request form, offer and analytics written and tested locally, not committed (owner's decisions: a light
+   freelance offer with no paid discovery stage and no published prices; durations: small automation or fix 1 to 2
+   weeks, AI agent development 1 to 3 months depending on the request, data and cloud work 2 to 4 weeks, website 2 to
+   4 weeks). Site: `src/components/HowWeWork.tsx` on Services (Request -> Quote (free 20-minute call, fixed quote) ->
+   Build and deliver (50/50 payment, 14 days of bug fixes, code belongs to the client)); `src/components/RequestForm.tsx`
+   on Contact (name, email, company, service, description, deadline, budget range, links, consent; hidden field and
+   fill-time spam checks; posts JSON to /api/request; GA event generate_lead); `src/config/request.ts` (choices);
+   `/privacy` (draft for review); `src/components/Analytics.tsx` (GA4 G-BZ9TFJCFBF with Consent Mode, banner, only on
+   novapunkai.com or with ?ga_test); Privacy link in the footer. Backend: `functions/` (Node 22, firebase-functions v2
+   onRequest `projectRequest` in us-central1, max 2 instances; validates, rate limit 5 per IP hash per hour in
+   Firestore `rate_limits`, stores `requests`, emails the owner by SMTP when SMTP_HOST, SMTP_USER and the secret
+   SMTP_PASSWORD are set; unit tests 5 pass), `firestore.rules` (deny all to browsers), `firebase.json` (functions,
+   firestore rules, emulators, hosting rewrite /api/request -> projectRequest). Local check: the form sent a payload
+   that the function's validation accepts; banner and Consent Mode default 'denied' work; static build passes.
+   Do NOT push before the function is deployed: the Contact form would fail and the hosting deploy may refuse the
+   rewrite. Owner setup: Firebase Blaze plan, Firestore database, SMTP account for sean@novapunkai.com, first deploy
+   of functions and rules from the PC (Java and the Firebase CLI are not installed here; the emulators were not run).
+7. 2026-11-23 owner upgraded the Firebase project novapunk-homepage-a8912 to Blaze (pay as you go). Claude created the
+   Firestore database: (default), Standard edition, location nam5 (United States, permanent), production-mode rules
+   (deny all), no scheduled backups. Next: SMTP details for the email notice, then the first deploy of functions and
+   rules from the PC with the Firebase CLI.
+8. 2026-11-23 email notice: the mailbox is Zoho Mail (Zoho Workplace). `functions/.env.novapunk-homepage-a8912` sets
+   SMTP_HOST=smtp.zoho.com (port 465, SSL, as in the code), SMTP_USER and NOTIFY_TO=sean@novapunkai.com. The password
+   goes only into Secret Manager as SMTP_PASSWORD, typed by the owner (a Zoho app-specific password if 2FA is on).
+9. 2026-11-23 first deploy from the PC (Firebase CLI 15.33.0 via npx, owner signed in as the project owner; the owner
+   added the SMTP_PASSWORD secret version 1 in the Cloud console because the CLI hidden prompt sent an empty value):
+   `firebase deploy --only functions,firestore:rules --force`. APIs enabled by the CLI (Cloud Functions, Cloud Build,
+   Artifact Registry, Cloud Run, Eventarc, Pub/Sub, Secret Manager). Function projectRequest (Node 22, 2nd gen,
+   us-central1, 256 MiB, max 2 instances) at https://us-central1-novapunk-homepage-a8912.cloudfunctions.net/projectRequest;
+   Artifact Registry cleanup policy: images older than 1 day. Rules released. Test: a valid request answered 200 and
+   was stored (Firestore id 5oCf4SARFdLVJp1UE01F, a TEST entry to delete later); an invalid email answered 400; no email
+   error in the logs. Next: owner checks the inbox, then commit and push (the hosting deploy in GitHub Actions now
+   includes the /api/request rewrite; its service account may need Cloud Functions or Cloud Run viewer rights).
+10. 2026-11-23 owner confirmed the test email arrived in the Zoho inbox: the full path (function -> Firestore -> Zoho
+    SMTP) works. Next: commit and push, then one real request from https://novapunkai.com/contact/, then delete the test
+    entries in Firestore `requests`.

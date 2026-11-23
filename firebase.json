@@ -3,9 +3,19 @@
     "public": "out",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "redirects": [{"source": "/waitlist{,/**}", "destination": "/contact/", "type": 301}],
+    "rewrites": [{"source": "/api/request", "function": {"functionId": "projectRequest", "region": "us-central1"}}],
     "headers": [
       {"source": "/_next/static/**", "headers": [{"key": "Cache-Control", "value": "public,max-age=31536000,immutable"}]},
       {"source": "**/*.mp4", "headers": [{"key": "Cache-Control", "value": "public,max-age=3600"}]}
     ]
+  },
+  "functions": [{"source": "functions", "codebase": "default", "predeploy": ["npm --prefix \"$RESOURCE_DIR\" run build"]}],
+  "firestore": {"rules": "firestore.rules"},
+  "emulators": {
+    "functions": {"port": 5001},
+    "firestore": {"port": 8080},
+    "hosting": {"port": 5000},
+    "ui": {"enabled": false},
+    "singleProjectMode": true
   }
 }
