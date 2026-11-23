@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-04",
+  "local_commit": "6e70426",
+  "source_sha256": {
+    "package.json": "1b2737ce0664c570cc5cba13021c8e67e81c81b692cb3fbefe49790517e8ec0c",
+    "package-lock.json": "e8f1f39d00cd4281194232b9a3dc7b6d520b7778538cd4dc03cb79f6ff54b23a",
+    "next.config.ts": "ba56f36ab034041dff99f581c1d807d27324321d16d4d5b66a4f7ca3193809da",
+    "firebase.json": "298189ddd1009afe6245b4ded5261f8ae544af8486dc972ffbf2c288b4241011",
+    ".firebaserc": "9c0712f313388fc9f2b71bdc77e25e5dca7f3d7799263e94b595bbff3a863b1b",
+    ".github/workflows/firebase-hosting.yml": "9c776005c640478481cde2b45a670a783961a92ee28a16f6eb07c978cca8ff05",
+    "src/config/services.ts": "cf657f82c04ee980ec7927a640c2ae4effaf8d35060f77c0f8810e062ae42870",
+    "content/service-demos.json": "2872cef8f972ad15c1a9b55399afab5fade0c3578c4a3710e01d6acd88b46087"
+  },
+  "verification": "source inspection only; no new build, deployment or live cloud checks"
+}
