@@ -97,3 +97,20 @@ site text and official documents are in English (official documents also get a K
     whose packages exist only on this PC. Fix: tsconfig excludes `functions`, eslint ignores `functions/**`; a clean
     clone with only the site packages builds (10 pages). `scripts/push.ps1` copied from the NovaNutri repo (checks for
     uncommitted changes, never force pushes); it pushes the repository it sits in.
+12. 2026-11-23 owner pushed e3fb3eb; run #7 built and deployed (the hosting deploy with the /api/request rewrite needed
+    no extra rights). Live: /contact/, /privacy/, /services/ answer 200; GET /api/request answers 405 from the function.
+    A real request from the live form (Decline on the banner, "Live site test (Claude)") showed the thank-you step.
+    Two TEST entries are in Firestore `requests` (5oCf4SARFdLVJp1UE01F and the live-form one) until the owner agrees
+    to delete them.
+13. 2026-11-23 owner confirmed the second email and approved deleting the tests: both TEST documents in `requests`
+    (5oCf4SARFdLVJp1UE01F, b3nJjJ6vUm9CLmWY7Inj) deleted with `firebase firestore:delete`; the console no longer lists
+    them. The empty `requests` collection is recreated by the next real request. Leftover: a few `rate_limits` counters
+    from the tests (no personal data; an optional Firestore TTL policy on expiresAt would clean them automatically).
+14. 2026-11-23 progress report: `docs/20261123_novapunk_homepage_revamp_en.docx` (4 pages) and `_ko` (5 pages), with
+    live screenshots `docs/screenshots/hp_01_home_video.jpg` to `hp_04_request_form.jpg` (captured with analytics
+    declined). No 12-digit number in either PDF. Builders hp_en.py and hp_ko.py in the session scratchpad doc1111.
+15. 2026-11-24 consent by region (owner's choice A): Consent Mode defaults analytics_storage to denied only for visitors
+    Google locates in the EU 27, Iceland, Liechtenstein, Norway, the UK and Switzerland, and to granted elsewhere; ads
+    storage is always denied; a saved choice overrides both. The banner shows only when no choice is saved and the
+    browser time zone is European (Europe/* or the Atlantic islands of EEA countries). Privacy policy text updated
+    (dated November 24). Tested with Playwright time zones: Detroit and Seoul no banner, Berlin banner; static build passes.

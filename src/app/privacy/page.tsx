@@ -9,7 +9,7 @@ export default function Privacy() {
   const h = "text-2xl text-default-900";
   return <>
     <PageIntro eyebrow="Privacy" title="Privacy policy">
-      <p>Last updated: November 23, 2026. This policy explains what NovaPunk LLC (Michigan, USA) collects on novapunkai.com and why.</p>
+      <p>Last updated: November 24, 2026. This policy explains what NovaPunk LLC (Michigan, USA) collects on novapunkai.com and why.</p>
     </PageIntro>
     <section className="lg:px-7.5 md:px-5 px-4"><div className="container px-6 md:px-10 py-16 space-y-8 max-w-200 leading-relaxed">
       <div className="space-y-3"><h2 className={h}>Project requests</h2>
@@ -20,9 +20,11 @@ export default function Privacy() {
         <p>We keep requests for up to 24 months after our last contact, unless they lead to a contract, in which case they are kept with the
           project records.</p></div>
       <div className="space-y-3"><h2 className={h}>Analytics</h2>
-        <p>With your consent, we use Google Analytics to understand how visitors find and use the site (pages viewed, approximate location,
-          device type, how you arrived). Until you accept, Google Analytics stores no cookies. We do not use advertising features and do
-          not sell personal information.</p>
+        <p>We use Google Analytics to understand how visitors find and use the site (pages viewed, approximate location, device type,
+          how you arrived). Visitors in the European Union, the European Economic Area, the United Kingdom and Switzerland are asked
+          first, and Google Analytics stores no cookies for them until they accept. Elsewhere, analytics cookies are on by default; you
+          can turn them off with the button below at any time. We do not use advertising features and do not sell personal
+          information.</p>
         <ConsentSettings /></div>
       <div className="space-y-3"><h2 className={h}>Service providers</h2>
         <p>The site is hosted on Google Firebase. Google acts as our service provider for hosting, the form database and analytics. Email
