@@ -114,3 +114,9 @@ site text and official documents are in English (official documents also get a K
     storage is always denied; a saved choice overrides both. The banner shows only when no choice is saved and the
     browser time zone is European (Europe/* or the Atlantic islands of EEA countries). Privacy policy text updated
     (dated November 24). Tested with Playwright time zones: Detroit and Seoul no banner, Berlin banner; static build passes.
+16. 2026-11-24 QR code (owner): `public/images/qr/novapunkai-qr.svg` and `.png` encode
+    https://novapunkai.com/?utm_source=qr&utm_medium=offline (QR version 4, error level M, dark #101a33), made once with
+    segno 1.6.6 in a scratch environment (no site dependency); decoded back with OpenCV. Footer shows it with "Show it
+    full screen"; `/qr/` is a full-screen page for showing on a phone (noindex). Scans appear in GA4 as source "qr".
+    Marketing drafts for later (owner put them on hold): `docs/marketing/upwork_profile.md`,
+    `docs/marketing/google_business_profile.md`.
